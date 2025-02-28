@@ -1,0 +1,29 @@
+{
+  "name": "@neutrino-package/rabbitmq",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./config": {
+      "import": "./dist/config.js",
+      "require": "./dist/config.js",
+      "types": "./dist/config.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@types/amqplib": "^0.10.6",
+    "amqplib": "^0.10.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}
