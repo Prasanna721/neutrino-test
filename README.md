@@ -2,7 +2,6 @@
 
 This repository contains the Neutrino application, which includes a webapp and a neutrino service. Follow the steps below to set up your development environment and run the app.
 
----
 
 ## Prerequisites
 
@@ -14,31 +13,23 @@ Make sure you have the following installed:
 
 - [Minikube](https://minikube.sigs.k8s.io/docs/start/)
 
----
 
 ## Setup Instructions
 
 ### 1. Configure the Webapp Environment
 
-Navigate to the `/apps/webapp` directory and create (or update) an environment file (e.g., `.env`) with the following variables:
+Navigate to the `/apps/webapp` directory and create an environment file (e.g., `.env`) with the following variables:
 
 ```env
 
 # Env variables for the webapp (webapp currently uses the Claude API driver)
 
 CLAUDE_API_KEY=your_claude_api_key_here
-
-OPENAI_API_KEY=your_openai_api_key_here
-
-GEMINI_API_KEY=your_gemini_api_key_here
-
 SUPABASE_URL=your_supabase_url_here
-
 SUPABASE_KEY=your_supabase_key_here
 
 ```
 
----
 
 ### 2. Start Minikube
 
@@ -66,7 +57,6 @@ docker info | grep minikube
 
 ```
 
----
 
 ### 3. Build the Neutrino Service
 
@@ -78,7 +68,6 @@ docker compose build
 
 ```
 
----
 
 ### 4. Run the Webapp
 
