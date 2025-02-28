@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: neutrino-test
+spec:
+  ttlSecondsAfterFinished: 3600
+  template:
+    spec:
+      containers:
+        - name: neutrino
+          image: neutrino-neutrino:latest
+          imagePullPolicy: IfNotPresent
+          command: ["node", "build/app.js"]
+      restartPolicy: Never

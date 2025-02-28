@@ -1,0 +1,20 @@
+{
+  "name": "neutrino-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Prasanna A P",
+  "license": "ISC",
+  "description": "",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "dependencies": {
+    "@neutrino-package/rabbitmq": "^1.0.0",
+    "@neutrino-package/supabase": "^1.0.0"
+  }
+}

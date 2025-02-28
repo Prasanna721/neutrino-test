@@ -1,0 +1,32 @@
+{
+  "name": "neutrino",
+  "version": "1.0.0",
+  "description": "Neutrino test is a AI powered QA platform",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "tsx src/app.ts",
+    "build": "tsc"
+  },
+  "author": "Prasanna A P",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.36.3",
+    "@fastify/cors": "^10.0.2",
+    "@fastify/sensible": "^6.0.3",
+    "@fastify/websocket": "^11.0.2",
+    "@neutrino-package/rabbitmq": "^1.0.0",
+    "@neutrino-package/supabase": "^1.0.0",
+    "@supabase/supabase-js": "^2.48.1",
+    "dotenv": "^16.4.7",
+    "fastify": "^5.2.1",
+    "openai": "^4.85.1",
+    "playwright": "^1.50.1",
+    "tsx": "^4.19.2"
+  }
+}

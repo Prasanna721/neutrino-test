@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    /* Base Options: */
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "ES2017",
+    "allowJs": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "moduleResolution": "node16",
+
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+
+    /* If transpiling with TypeScript: */
+    "module": "Node16",
+    "rootDir": "./src",
+    "outDir": "build",
+    "sourceMap": true,
+
+    /* AND if you're building for a library: */
+    "declaration": true,
+    "paths": { "@/*": ["./src/*"], },
+
+    /* AND if you're building for a library in a monorepo: */
+    "composite": true,
+    "declarationMap": true,
+
+    /* If NOT transpiling with TypeScript: */
+    "noEmit": false,
+
+
+    /* If your code doesn't run in the DOM: */
+    "lib": ["dom", "dom.iterable", "esnext"]
+  }
+}
