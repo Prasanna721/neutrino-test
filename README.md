@@ -1,18 +1,16 @@
 # Neutrino App
 
-This repository contains the Neutrino application, which includes a webapp and a neutrino service. Follow the steps below to set up your development environment and run the app.
+Neutrino Test is an AI-powered QA testing platform that automates end-to-end testing using simple, natural language commands.
 
+[Watch Demo](demo/demo.mp4)
 
 ## Prerequisites
 
 Make sure you have the following installed:
 
 - [Docker](https://docs.docker.com/get-docker/)
-
 - [kubectl](https://kubernetes.io/docs/tasks/tools/)
-
 - [Minikube](https://minikube.sigs.k8s.io/docs/start/)
-
 
 ## Setup Instructions
 
@@ -29,7 +27,6 @@ SUPABASE_URL=your_supabase_url_here
 SUPABASE_KEY=your_supabase_key_here
 
 ```
-
 
 ### 2. Start Minikube
 
@@ -57,7 +54,6 @@ docker info | grep minikube
 
 ```
 
-
 ### 3. Build the Neutrino Service
 
 Navigate to the `/apps/neutrino` directory and build the Docker images using Docker Compose:
@@ -67,7 +63,6 @@ Navigate to the `/apps/neutrino` directory and build the Docker images using Doc
 docker compose build
 
 ```
-
 
 ### 4. Run the Webapp
 
