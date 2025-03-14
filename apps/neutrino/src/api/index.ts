@@ -7,14 +7,14 @@ import {
 } from "./utils.js";
 import { executeAction } from "../actions.js";
 import { screenshotDIR, screenshotPath, VAR_SUCCESS } from "../constants.js";
-import { addTaskImages, clearFolder, handleLogs } from "../utils/helper.js";
+import { addBrowserActions, clearFolder, handleLogs } from "../utils/helper.js";
 import { createLogMessage, LogPublisher } from "../services/logHandler.js";
 import { PodLogHandler, createDBLogMessage } from "../services/dbHandler.js";
 import { SupabaseDB } from "@neutrino-package/supabase";
 import {
   LogLevel,
   PodStatus,
-  TaskImageType,
+  BrowserActionType,
   TaskStatus,
 } from "@neutrino-package/supabase/types";
 import { createSupabaseClient } from "@neutrino-package/supabase/config";
@@ -95,7 +95,7 @@ export class API {
             this.dockerJobName,
             createLogMessage(LogLevel.INFO, "Action processed", { action })
           ));
-        this.podLogHandler.savePodLog(
+        await this.podLogHandler.savePodLog(
           this.podId,
           createDBLogMessage(LogLevel.INFO, "action", { action })
         );
@@ -108,16 +108,16 @@ export class API {
           path: screenshotPath(this.dockerJobName, j++),
         });
 
-        const currentUrl = page.url();
+        const currentUrl = await page.url();
         const mime_type = "image/png";
-        addTaskImages(
+        await addBrowserActions(
           this.db,
           this.dockerJobName,
           this.podId,
           screenshotPath(this.dockerJobName, j - 1),
           currentUrl,
           mime_type,
-          TaskImageType.TASK,
+          BrowserActionType.TASK,
           { task: this.testSuite[i], action }
         );
 
@@ -134,13 +134,14 @@ export class API {
               verifyActionRes,
             })
           ));
-        this.podLogHandler.savePodLog(
+        await this.podLogHandler.savePodLog(
           this.podId,
           createDBLogMessage(LogLevel.INFO, "verify_action", {
             verifyActionRes,
           })
         );
         console.log(verifyActionRes);
+
         const isTaskExecuted = verifyActionRes.status == VAR_SUCCESS;
         if (!isTaskExecuted) {
           i--;
@@ -161,7 +162,7 @@ export class API {
             error,
           })
         ));
-      this.podLogHandler.savePodLog(
+      await this.podLogHandler.savePodLog(
         this.podId,
         createDBLogMessage(LogLevel.ERROR, "exec_error", { error: error })
       );
@@ -176,14 +177,14 @@ export class API {
       await this.browser.close();
 
       const videoPath = await page.video()?.path();
-      addTaskImages(
+      await addBrowserActions(
         this.db,
         this.dockerJobName,
         this.podId,
         videoPath,
         "",
         "video/webm",
-        TaskImageType.VIDEO,
+        BrowserActionType.VIDEO,
         { task: "final_video" }
       );
     }

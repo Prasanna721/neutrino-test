@@ -43,7 +43,7 @@ export default function Page() {
             icon: <Square2StackIcon className="w-5 h-5 text-gray-600" />,
             label: "test_suites",
             name: "Test Suites",
-            onClick: () => console.log("Clicked Test Suites")
+            onClick: () => { }
         },
         {
             icon: <PlayCircleIcon className="w-5 h-5 text-gray-600" />,
@@ -93,7 +93,7 @@ export default function Page() {
                     {selectedLabel === "test_suites" && (
                         <TestSuitesView testSuites={testSuites} isLoading={isLoading} />
                     )}
-                    {selectedLabel === "test_runs" && <div className="p-4">Test Runs View</div>}
+                    {selectedLabel === "test_runs" && <div className="p-4">Coming Soon..</div>}
                 </section>
             </div>
 

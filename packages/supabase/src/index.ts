@@ -1,11 +1,23 @@
 // package/supabase/index.ts
 
 import { SupabaseClient } from "@supabase/supabase-js";
-import { Testsuite, Task, Pod, Log, TaskImage, TaskImageType } from "./types";
+import {
+  Testsuite,
+  Task,
+  Pod,
+  Log,
+  BrowserAction,
+  BrowserActionType,
+} from "./types";
 
 export class SupabaseDB {
   private client: SupabaseClient;
-  private imageBucket = "taskimages";
+  private imageBucket = "browser-actions-bucket";
+  private TABLENAME_TESTSUITES = "testsuites";
+  private TABLENAME_TASKS = "tasks";
+  private TABLENAME_PODS = "pods";
+  private TABLENAME_LOGS = "logs";
+  private TABLENAME_BROWSER_ACTIONS = "browser_actions";
 
   constructor(client: SupabaseClient) {
     this.client = client;
@@ -17,7 +29,7 @@ export class SupabaseDB {
 
   async createTestsuite(testsuite: Partial<Testsuite>): Promise<Testsuite> {
     const { data, error } = await this.client
-      .from("testsuites")
+      .from(this.TABLENAME_TESTSUITES)
       .insert(testsuite)
       .select()
       .single();
@@ -30,7 +42,7 @@ export class SupabaseDB {
 
   async getTestsuitesByUser(user_id: string): Promise<Testsuite[]> {
     const { data, error } = await this.client
-      .from("testsuites")
+      .from(this.TABLENAME_TESTSUITES)
       .select("*")
       .eq("user_id", user_id);
     if (error) {
@@ -42,7 +54,7 @@ export class SupabaseDB {
 
   async getTestsuite(id: string): Promise<Testsuite> {
     const { data, error } = await this.client
-      .from("testsuites")
+      .from(this.TABLENAME_TESTSUITES)
       .select("*")
       .eq("id", id)
       .single();
@@ -54,7 +66,9 @@ export class SupabaseDB {
   }
 
   async getAllTestsuite(): Promise<Testsuite[]> {
-    const { data, error } = await this.client.from("testsuites").select("*");
+    const { data, error } = await this.client
+      .from(this.TABLENAME_TESTSUITES)
+      .select("*");
     if (error) {
       console.error("Error fetching testsuite:", error);
       throw error;
@@ -68,7 +82,7 @@ export class SupabaseDB {
 
   async createTask(task: Partial<Task>): Promise<Task> {
     const { data, error } = await this.client
-      .from("tasks")
+      .from(this.TABLENAME_TASKS)
       .insert(task)
       .select()
       .single();
@@ -81,7 +95,7 @@ export class SupabaseDB {
 
   async deleteTask(taskId: number): Promise<void> {
     const { data, error } = await this.client
-      .from("tasks")
+      .from(this.TABLENAME_TASKS)
       .delete()
       .eq("id", taskId);
 
@@ -93,7 +107,7 @@ export class SupabaseDB {
 
   async getTasksByTestsuite(testsuite_id: string): Promise<Task[]> {
     const { data, error } = await this.client
-      .from("tasks")
+      .from(this.TABLENAME_TASKS)
       .select("*")
       .eq("testsuite_id", testsuite_id);
     if (error) {
@@ -109,7 +123,7 @@ export class SupabaseDB {
 
   async createPod(pod: Partial<Pod>): Promise<Pod> {
     const { data, error } = await this.client
-      .from("pods")
+      .from(this.TABLENAME_PODS)
       .insert(pod)
       .select()
       .single();
@@ -122,7 +136,7 @@ export class SupabaseDB {
 
   async updatePod(id: number, updates: Partial<Pod>): Promise<Pod> {
     const { data, error } = await this.client
-      .from("pods")
+      .from(this.TABLENAME_PODS)
       .update(updates)
       .eq("id", id)
       .select()
@@ -139,7 +153,7 @@ export class SupabaseDB {
     updates: Partial<Pod>
   ): Promise<Pod> {
     const { data, error } = await this.client
-      .from("pods")
+      .from(this.TABLENAME_PODS)
       .update(updates)
       .eq("jobname", jobName)
       .select()
@@ -153,7 +167,7 @@ export class SupabaseDB {
 
   async getPodsByTestsuite(testsuite_id: string): Promise<Pod[]> {
     const { data, error } = await this.client
-      .from("pods")
+      .from(this.TABLENAME_PODS)
       .select("*")
       .eq("testsuite_id", testsuite_id);
     if (error) {
@@ -165,7 +179,7 @@ export class SupabaseDB {
 
   async getPodByJobName(jobname: string): Promise<Pod> {
     const { data, error } = await this.client
-      .from("pods")
+      .from(this.TABLENAME_PODS)
       .select("*")
       .eq("jobname", jobname)
       .single();
@@ -191,7 +205,7 @@ export class SupabaseDB {
 
   async getLogsByPod(pod_id: number): Promise<Log[]> {
     const { data, error } = await this.client
-      .from("logs")
+      .from(this.TABLENAME_LOGS)
       .select("*")
       .eq("pod_id", pod_id);
     if (error) {
@@ -205,7 +219,7 @@ export class SupabaseDB {
   // Image Bucket operations
   // -------------------------
 
-  async uploadTaskImageToBucket(
+  async uploadBrowserActionToBucket(
     filePath: string,
     file: File | Blob
   ): Promise<string> {
@@ -219,7 +233,7 @@ export class SupabaseDB {
     return data.path;
   }
 
-  async deleteTaskImageFromBucket(filePath: string): Promise<void> {
+  async deleteBrowserActionFromBucket(filePath: string): Promise<void> {
     const { error } = await this.client.storage
       .from(this.imageBucket)
       .remove([filePath]);
@@ -229,7 +243,7 @@ export class SupabaseDB {
     }
   }
 
-  async getTaskImageFromBucket(
+  async getBrowserActionFromBucket(
     filePath: string,
     expiresIn = 3600
   ): Promise<string> {
@@ -244,126 +258,126 @@ export class SupabaseDB {
   }
 
   // -------------------------
-  // Image operations (TaskImages)
+  // Image operations (BrowserActions)
   // -------------------------
 
-  async createTaskImage(
-    image: Partial<TaskImage>,
+  async createBrowserAction(
+    image: Partial<BrowserAction>,
     file: File | Blob
-  ): Promise<TaskImage> {
+  ): Promise<BrowserAction> {
     if (!image.jobname || !image.file_name) {
       throw new Error(
         "jobname and file_name are required in the image metadata"
       );
     }
     const filePath = `${image.jobname}/${Date.now()}_${image.file_name}`;
-    const uploadedPath = await this.uploadTaskImageToBucket(filePath, file);
+    const uploadedPath = await this.uploadBrowserActionToBucket(filePath, file);
     image.file_path = uploadedPath;
     const { data, error } = await this.client
-      .from("taskimages")
+      .from(this.TABLENAME_BROWSER_ACTIONS)
       .insert(image)
       .select()
       .single();
     if (error) {
-      console.error("Error creating task image:", error);
+      console.error("Error creating browser action:", error);
       throw error;
     }
     return data;
   }
 
-  async getTaskImage(id: number): Promise<TaskImage> {
+  async getBrowserAction(id: number): Promise<BrowserAction> {
     const { data, error } = await this.client
-      .from("taskimages")
+      .from(this.TABLENAME_BROWSER_ACTIONS)
       .select("*")
       .eq("id", id)
       .single();
     if (error) {
-      console.error("Error fetching task image:", error);
+      console.error("Error fetching browser action:", error);
       throw error;
     }
     return data;
   }
 
-  async getRecentTaskImage(
-    image_type: TaskImageType = TaskImageType.TASK
-  ): Promise<TaskImage | null> {
+  async getRecentBrowserAction(
+    image_type: BrowserActionType = BrowserActionType.TASK
+  ): Promise<BrowserAction | null> {
     const { data, error } = await this.client
-      .from("taskimages")
+      .from(this.TABLENAME_BROWSER_ACTIONS)
       .select("*")
       .eq("image_type", image_type)
       .order("created_at", { ascending: false })
       .limit(1)
       .maybeSingle();
     if (error) {
-      console.error("Error fetching recent task image:", error);
+      console.error("Error fetching recent browser action:", error);
       throw error;
     }
     return data;
   }
 
-  async getTaskImagesByPod(pod_id: number): Promise<TaskImage[]> {
+  async getBrowserActionsByPod(pod_id: number): Promise<BrowserAction[]> {
     const { data, error } = await this.client
-      .from("taskimages")
+      .from(this.TABLENAME_BROWSER_ACTIONS)
       .select("*")
       .eq("pod_id", pod_id);
     if (error) {
-      console.error("Error fetching task images by pod:", error);
+      console.error("Error fetching browser actions by pod:", error);
       throw error;
     }
     return data || [];
   }
 
-  async getTaskImagesByJobName(jobname: string): Promise<TaskImage[]> {
+  async getBrowserActionsByJobName(jobname: string): Promise<BrowserAction[]> {
     const { data, error } = await this.client
-      .from("taskimages")
+      .from(this.TABLENAME_BROWSER_ACTIONS)
       .select("*")
       .eq("jobname", jobname);
     if (error) {
-      console.error("Error fetching task images by jobname:", error);
+      console.error("Error fetching browser action by jobname:", error);
       throw error;
     }
     return data || [];
   }
 
-  async updateTaskImage(
+  async updateBrowserAction(
     id: number,
-    updates: Partial<TaskImage> & { newFile?: File | Blob }
-  ): Promise<TaskImage> {
-    const existing = await this.getTaskImage(id);
+    updates: Partial<BrowserAction> & { newFile?: File | Blob }
+  ): Promise<BrowserAction> {
+    const existing = await this.getBrowserAction(id);
     if (updates.newFile) {
       const filePath = `${existing.jobname}/${Date.now()}_${
         existing.file_name
       }`;
-      const uploadedPath = await this.uploadTaskImageToBucket(
+      const uploadedPath = await this.uploadBrowserActionToBucket(
         filePath,
         updates.newFile
       );
       updates.file_path = uploadedPath;
-      await this.deleteTaskImageFromBucket(existing.file_path);
+      await this.deleteBrowserActionFromBucket(existing.file_path);
     }
     delete updates.newFile;
     const { data, error } = await this.client
-      .from("taskimages")
+      .from(this.TABLENAME_BROWSER_ACTIONS)
       .update(updates)
       .eq("id", id)
       .select()
       .single();
     if (error) {
-      console.error("Error updating task image:", error);
+      console.error("Error updating browser action:", error);
       throw error;
     }
     return data;
   }
 
-  async deleteTaskImage(id: number): Promise<void> {
-    const image = await this.getTaskImage(id);
-    await this.deleteTaskImageFromBucket(image.file_path);
+  async deleteBrowserAction(id: number): Promise<void> {
+    const image = await this.getBrowserAction(id);
+    await this.deleteBrowserActionFromBucket(image.file_path);
     const { error } = await this.client
-      .from("taskimages")
+      .from(this.TABLENAME_BROWSER_ACTIONS)
       .delete()
       .eq("id", id);
     if (error) {
-      console.error("Error deleting task image record:", error);
+      console.error("Error deleting browser action record:", error);
       throw error;
     }
   }

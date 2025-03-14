@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS public.logs (
 );
 
 -- Images Table 
-CREATE TABLE IF NOT EXISTS public.taskimages (
+CREATE TABLE IF NOT EXISTS public.browser_actions (
     id serial PRIMARY KEY,
     jobname text REFERENCES public.pods(jobname) ON DELETE CASCADE,
     pod_id integer REFERENCES public.pods(id) ON DELETE CASCADE,

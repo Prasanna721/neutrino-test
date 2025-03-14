@@ -6,6 +6,7 @@ export enum BROWSER_ACTIONS {
   type = "type",
   hover = "hover",
   drag = "drag",
+  sleep = "sleep",
 }
 
 export enum VERIFYACTION_STATUS {

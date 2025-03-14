@@ -8,6 +8,7 @@ pnpm-debug.log*
 .env.development.local
 .env.test.local
 .env.production.local
+job-neutrino.yaml
 
 .next/
 out/
@@ -21,6 +22,9 @@ screenshots/
 logs/
 *.log
 debug.log*
+
+packages/supabase/temp/
+packages/supabase/migrate.ts
 
 docker-compose.override.yml
 

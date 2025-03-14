@@ -12,7 +12,7 @@ export const claudeAction = (data: any) => {
         Based on the screenshot and dimensions, please provide instructions for completing this task. The task wouldn't be direct, you have to look at the elements present on the screen and understand the task and provide instructions to execute the task.
         Return your response in this exact JSON format:
         {
-            "task_type": "goto_page|click|type|hover|drag",
+            "task_type": "goto_page|click|type|hover|drag|sleep",
             "message": "specific message or URL",
             "screen_coord": {"x": number, "y": number} or null
         }

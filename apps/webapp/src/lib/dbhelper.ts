@@ -9,7 +9,7 @@ import {
   Pod,
   PodDeploymentEnv,
   PodStatus,
-  TaskImage,
+  BrowserAction,
   TaskStatus,
 } from "@neutrino-package/supabase/types";
 
@@ -207,25 +207,28 @@ export const getPodLogs = async (podId: number): Promise<Log[]> => {
   return logs;
 };
 
-export const getTaskImagesByJobName = async (
+export const getBrowserActionsByJobName = async (
   jobName: string
-): Promise<TaskImage[]> => {
+): Promise<BrowserAction[]> => {
   const supabaseClient = createSupabaseClient();
   const db = new SupabaseDB(supabaseClient);
-  const taskImageRecord = await db.getTaskImagesByJobName(jobName);
-  return taskImageRecord;
+  const BrowserActionRecord = await db.getBrowserActionsByJobName(jobName);
+  return BrowserActionRecord;
 };
 
-export const getRecentTaskImage = async (): Promise<TaskImage | null> => {
-  const supabaseClient = createSupabaseClient();
-  const db = new SupabaseDB(supabaseClient);
-  const taskImageRecord = await db.getRecentTaskImage();
-  return taskImageRecord;
-};
+export const getRecentBrowserAction =
+  async (): Promise<BrowserAction | null> => {
+    const supabaseClient = createSupabaseClient();
+    const db = new SupabaseDB(supabaseClient);
+    const BrowserActionRecord = await db.getRecentBrowserAction();
+    return BrowserActionRecord;
+  };
 
-export const getTaskImageUrl = async (filePath: string): Promise<string> => {
+export const getBrowserActionUrl = async (
+  filePath: string
+): Promise<string> => {
   const supabaseClient = createSupabaseClient();
   const db = new SupabaseDB(supabaseClient);
-  const signedUrl = await db.getTaskImageFromBucket(filePath);
+  const signedUrl = await db.getBrowserActionFromBucket(filePath);
   return signedUrl;
 };

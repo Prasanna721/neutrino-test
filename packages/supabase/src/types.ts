@@ -83,14 +83,14 @@ export interface Log {
   meta?: Record<string, unknown>;
 }
 
-export enum TaskImageType {
+export enum BrowserActionType {
   TASK = "TASK",
-  VERIFICATION = "VERIFICATION",
+  OBSERVATION = "OBSERVATION",
   VIDEO = "VIDEO",
   ERROR = "ERROR",
 }
 
-export interface TaskImage {
+export interface BrowserAction {
   id: number;
   jobname: string;
   pod_id: number;
@@ -98,7 +98,7 @@ export interface TaskImage {
   file_name: string;
   page_url: string;
   mime_type: string;
-  image_type: TaskImageType;
+  image_type: BrowserActionType;
   details?: Json;
   created_at: string;
 }

@@ -28,6 +28,7 @@ COPY apps/neutrino/ apps/neutrino/
 COPY packages/ packages/
 
 RUN yarn install --frozen-lockfile
+RUN yarn workspace @neutrino-package/supabase build
 RUN yarn workspace neutrino build
 
 # -------------------------------------------------------------------

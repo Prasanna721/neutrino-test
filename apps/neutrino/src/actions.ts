@@ -42,5 +42,8 @@ export async function executeAction(page: Page, action: Action): Promise<void> {
         await page.mouse.up();
       }
       break;
+    case BROWSER_ACTIONS.sleep:
+      await page.waitForTimeout(5000);
+      break;
   }
 }

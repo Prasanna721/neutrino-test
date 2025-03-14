@@ -5,8 +5,8 @@ import CurrentPodComponent from "../components/CurrentPodComponent";
 import { useTestsuiteStore } from "@/store/useTestsuiteStore";
 import { TestSuite } from "@/types/testSuiteTypes";
 import { BaseButton, buttonDefault } from "@/components/Buttons";
-import { getRecentTaskImage, getTaskImageUrl } from "@/lib/dbhelper";
-import { TaskImage } from "@neutrino-package/supabase/types";
+import { getRecentBrowserAction, getBrowserActionUrl } from "@/lib/dbhelper";
+import { BrowserAction } from "@neutrino-package/supabase/types";
 import { TestflowView } from "./TestFlowView";
 import { ShimmerBrowserView } from "@/components/ShimmerBrowserView";
 

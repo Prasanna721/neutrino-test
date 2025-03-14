@@ -4,8 +4,8 @@ import * as path from "path";
 import { promises as fsPromise } from "fs";
 import {
   LogLevel,
-  TaskImage,
-  TaskImageType,
+  BrowserAction,
+  BrowserActionType,
 } from "@neutrino-package/supabase/types";
 import { createDBLogMessage, PodLogHandler } from "../services/dbHandler.js";
 
@@ -32,19 +32,22 @@ export const generateJobId = () => {
   return hex.slice(0, 12);
 };
 
-export const addTaskImages = async (
+export const addBrowserActions = async (
   db: SupabaseDB,
   dockerJobName: string,
   podId: number,
   filePath: string,
   pageUrl: string,
   mime_type: string,
-  image_type: TaskImageType,
+  image_type: BrowserActionType,
   details: {}
 ) => {
+  console.log("Reading file");
   const fileBuffer = await fsPromise.readFile(filePath);
+  console.log("Creating blob");
   const fileBlob = new Blob([fileBuffer], { type: "image/png" });
-  const imageMetadata: Partial<TaskImage> = {
+  console.log("Creating metadata");
+  const imageMetadata: Partial<BrowserAction> = {
     jobname: dockerJobName,
     file_name: filePath.split("/").pop() || "screenshot.png",
     pod_id: podId,
@@ -53,7 +56,9 @@ export const addTaskImages = async (
     image_type: image_type,
     details: details,
   };
-  await db.createTaskImage(imageMetadata, fileBlob);
+  console.log("Adding browser action");
+  await db.createBrowserAction(imageMetadata, fileBlob);
+  console.log("Browser action added");
 };
 
 export const handleLogs = (
