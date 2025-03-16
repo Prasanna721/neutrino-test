@@ -42,11 +42,8 @@ export const addBrowserActions = async (
   image_type: BrowserActionType,
   details: {}
 ) => {
-  console.log("Reading file");
   const fileBuffer = await fsPromise.readFile(filePath);
-  console.log("Creating blob");
   const fileBlob = new Blob([fileBuffer], { type: "image/png" });
-  console.log("Creating metadata");
   const imageMetadata: Partial<BrowserAction> = {
     jobname: dockerJobName,
     file_name: filePath.split("/").pop() || "screenshot.png",
@@ -56,9 +53,7 @@ export const addBrowserActions = async (
     image_type: image_type,
     details: details,
   };
-  console.log("Adding browser action");
   await db.createBrowserAction(imageMetadata, fileBlob);
-  console.log("Browser action added");
 };
 
 export const handleLogs = (

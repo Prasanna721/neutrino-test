@@ -7,6 +7,7 @@ export enum BROWSER_ACTIONS {
   hover = "hover",
   drag = "drag",
   sleep = "sleep",
+  scroll = "scroll",
 }
 
 export enum VERIFYACTION_STATUS {

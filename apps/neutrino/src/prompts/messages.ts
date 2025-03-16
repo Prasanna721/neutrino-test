@@ -12,11 +12,13 @@ export const claudeAction = (data: any) => {
         Based on the screenshot and dimensions, please provide instructions for completing this task. The task wouldn't be direct, you have to look at the elements present on the screen and understand the task and provide instructions to execute the task.
         Return your response in this exact JSON format:
         {
-            "task_type": "goto_page|click|type|hover|drag|sleep",
+            "task_type": "goto_page|click|type|hover|drag|sleep|scroll",
             "message": "specific message or URL",
             "screen_coord": {"x": number, "y": number} or null
+            "scroll": {"isVertical": boolean, "px": number} optional
         }
-        OUTPUT JSON ONLY FOR MACHINE PARSING (ONLY JSON)
+        on scroll task_type, screen_coord is location of mouse pointer and scroll is object it tells the direction and amount of scroll in pixels.
+        OUTPUT JSON ONLY FOR MACHINE PARSING (STRICTLY JSON)
         
         The screenshot is provided as base64. Analyze it and provide precise coordinates for any interactions.
         split the task into multiple steps if necessary and execute each step in order.

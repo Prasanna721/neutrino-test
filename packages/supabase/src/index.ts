@@ -8,7 +8,7 @@ import {
   Log,
   BrowserAction,
   BrowserActionType,
-} from "./types";
+} from "./types.js";
 
 export class SupabaseDB {
   private client: SupabaseClient;

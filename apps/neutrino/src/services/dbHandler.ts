@@ -65,4 +65,48 @@ export class PodLogHandler {
       throw error;
     }
   }
+
+  public async debug(
+    podId: number,
+    message: string,
+    meta?: Record<string, unknown>
+  ): Promise<void> {
+    await this.savePodLog(
+      podId,
+      createDBLogMessage(LogLevel.DEBUG, message, meta)
+    );
+  }
+
+  public async info(
+    podId: number,
+    message: string,
+    meta?: Record<string, unknown>
+  ): Promise<void> {
+    await this.savePodLog(
+      podId,
+      createDBLogMessage(LogLevel.INFO, message, meta)
+    );
+  }
+
+  public async warn(
+    podId: number,
+    message: string,
+    meta?: Record<string, unknown>
+  ): Promise<void> {
+    await this.savePodLog(
+      podId,
+      createDBLogMessage(LogLevel.WARN, message, meta)
+    );
+  }
+
+  public async error(
+    podId: number,
+    message: string,
+    meta?: Record<string, unknown>
+  ): Promise<void> {
+    await this.savePodLog(
+      podId,
+      createDBLogMessage(LogLevel.ERROR, message, meta)
+    );
+  }
 }
