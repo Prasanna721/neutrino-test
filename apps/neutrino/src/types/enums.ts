@@ -4,6 +4,7 @@ export enum BROWSER_ACTIONS {
   goto_page = "goto_page",
   click = "click",
   type = "type",
+  click_and_type = "click_and_type",
   hover = "hover",
   drag = "drag",
   sleep = "sleep",

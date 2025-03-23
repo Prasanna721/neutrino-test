@@ -153,7 +153,7 @@ export class API {
       throw new Error("Error starting the test");
     }
 
-    this.browser = await chromium.launch({ headless: true });
+    this.browser = await chromium.launch({ headless: false });
     const context: BrowserContext = await this.browser.newContext({
       recordVideo: {
         dir: screenshotDIR,
