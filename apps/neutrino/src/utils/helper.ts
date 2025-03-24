@@ -63,6 +63,7 @@ export const handleLogs = (
 ) => {
   if (podId) {
     process.on("uncaughtException", async (error) => {
+      console.error("Uncaught Exception", error);
       podLogHandler.savePodLog(
         podId,
         createDBLogMessage(LogLevel.ERROR, "uncaught_exception", {
@@ -73,11 +74,31 @@ export const handleLogs = (
     });
 
     process.on("unhandledRejection", async (reason, promise) => {
+      console.error("Unhandled Rejection at:", promise, "reason:", reason);
+
+      const errorMessage =
+        reason instanceof Error
+          ? reason.message
+          : typeof reason === "object"
+          ? (() => {
+              try {
+                return JSON.stringify(reason);
+              } catch (e) {
+                return String(reason);
+              }
+            })()
+          : String(reason);
+
+      const errorStack =
+        reason instanceof Error && reason.stack
+          ? reason.stack
+          : String(promise);
+
       podLogHandler.savePodLog(
         podId,
         createDBLogMessage(LogLevel.ERROR, "uncaught_rejection", {
-          message: reason,
-          stack: promise,
+          message: errorMessage,
+          stack: errorStack,
         })
       );
     });
