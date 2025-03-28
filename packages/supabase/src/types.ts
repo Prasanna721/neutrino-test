@@ -58,6 +58,7 @@ export interface Pod {
   task_status: TaskStatus;
   docker_container_id?: string;
   docker_image?: string;
+  testsuite_configs?: string[];
   host?: string;
   error_message?: string;
   jobname: string;
@@ -101,4 +102,12 @@ export interface BrowserAction {
   image_type: BrowserActionType;
   details?: Json;
   created_at: string;
+}
+
+export interface TestsuiteConfig {
+  id: number;
+  testsuite_id: string;
+  key: string;
+  value: string;
+  created_on: string;
 }

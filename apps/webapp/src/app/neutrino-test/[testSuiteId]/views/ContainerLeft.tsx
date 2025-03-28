@@ -9,7 +9,7 @@ export default function ContainerLeft({ testSuite }: { testSuite: TestSuite }) {
 
     const tabs: TabItem[] = [
         { key: "testSuite", label: "Test Suite", content: <TestSuiteTab testSuite={testSuite} /> },
-        { key: "configs", label: "Configs", content: <ConfigsTab /> },
+        { key: "configs", label: "Configs", content: <ConfigsTab testSuite={testSuite} /> },
     ];
 
     return (

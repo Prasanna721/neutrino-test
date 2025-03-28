@@ -35,7 +35,8 @@ CREATE TABLE IF NOT EXISTS public.pods (
     status text NOT NULL,             
     task_status text NOT NULL,
     docker_container_id text,         
-    docker_image text,                 
+    docker_image text, 
+    testsuite_configs jsonb,                
     host text,                         
     error_message text,               
     jobname text NOT NULL UNIQUE,  
@@ -67,6 +68,16 @@ CREATE TABLE IF NOT EXISTS public.browser_actions (
     image_type text,                
     details jsonb,                   
     created_at timestamptz NOT NULL DEFAULT now()
+);
+
+-- Testsuite Configs Table
+CREATE TABLE IF NOT EXISTS public.testsuite_configs (
+    id serial PRIMARY KEY,
+    testsuite_id varchar(16) NOT NULL REFERENCES public.testsuites(id) ON DELETE CASCADE,
+    key text NOT NULL,
+    value text NOT NULL,
+    created_on timestamptz NOT NULL DEFAULT now(),
+    CONSTRAINT unique_testsuite_key UNIQUE (testsuite_id, key)
 );
 
 CREATE INDEX IF NOT EXISTS idx_testsuites_user_id ON public.testsuites(user_id);

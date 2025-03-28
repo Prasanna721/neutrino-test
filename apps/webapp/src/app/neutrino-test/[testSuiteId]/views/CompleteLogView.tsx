@@ -13,6 +13,8 @@ import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import { updateTestSuiteById } from "@/store/useTestsuiteStore";
 import TabView, { TabItem } from "@/components/TabView";
 import { TestflowView } from "./TestFlowView";
+import ConfigListTable from "../components/ConfigListTable";
+import { ConfigItem } from "./ConfigsTab";
 
 interface CompleteLogsViewProps {
     testSuitId: string;
@@ -31,6 +33,13 @@ export default function CompleteLogsView({
 }: CompleteLogsViewProps) {
     const [logs, setLogs] = useState<string[]>([]);
     const [showTestConfigs, setShowTestConfigs] = useState(false);
+    const configItems: ConfigItem[] = logContainer.testsuiteConfigs
+        ? logContainer.testsuiteConfigs.map((config) => ({
+            key: config,
+            value: "Secret Value",
+            created_at: new Date(),
+        }))
+        : [];
 
     useEffect(() => {
         let intervalId: ReturnType<typeof setInterval> | undefined;
@@ -170,24 +179,21 @@ export default function CompleteLogsView({
                         )}
 
                         <div className="border-t mt-4 pt-2 text-gray-600 flex flex-col gap-2 text-xs">
-                            <div
-                                onClick={() => setShowTestConfigs((prev) => !prev)}
-                                className="cursor-pointer flex items-center gap-1 hover:underline">
-                                {showTestConfigs ? (
-                                    <ChevronUpIcon className="w-4 h-4" />
-                                ) : (
-                                    <ChevronDownIcon className="w-4 h-4" />
-                                )}
-                                <span>Test Configs</span>
-                            </div>
-                            {showTestConfigs && (
-                                <div className="mt-2 text-gray-600">
-                                    {/* Replace with your actual test configs */}
-                                    <p className="text-xs">Test Config 1: Value 1</p>
-                                    <p className="text-xs">Test Config 2: Value 2</p>
-                                    <p className="text-xs">Test Config 3: Value 3</p>
+                            {configItems.length == 0 ? <div className="text-gray-500 italic">No Test Configs</div> : (<>
+                                <div
+                                    onClick={() => setShowTestConfigs((prev) => !prev)}
+                                    className="cursor-pointer flex items-center gap-1 hover:underline">
+                                    {showTestConfigs ? (
+                                        <ChevronUpIcon className="w-4 h-4" />
+                                    ) : (
+                                        <ChevronDownIcon className="w-4 h-4" />
+                                    )}
+                                    <span>Test Configs</span>
                                 </div>
-                            )}
+                                {showTestConfigs && (
+                                    <ConfigListTable configItems={configItems} />
+                                )}
+                            </>)}
                         </div>
                     </div>
                 </div>

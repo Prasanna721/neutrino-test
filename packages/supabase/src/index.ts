@@ -8,6 +8,7 @@ import {
   Log,
   BrowserAction,
   BrowserActionType,
+  TestsuiteConfig,
 } from "./types.js";
 
 export class SupabaseDB {
@@ -18,6 +19,7 @@ export class SupabaseDB {
   private TABLENAME_PODS = "pods";
   private TABLENAME_LOGS = "logs";
   private TABLENAME_BROWSER_ACTIONS = "browser_actions";
+  private TABLENAME_TESTSUITE_CONFIGS = "testsuite_configs";
 
   constructor(client: SupabaseClient) {
     this.client = client;
@@ -380,5 +382,48 @@ export class SupabaseDB {
       console.error("Error deleting browser action record:", error);
       throw error;
     }
+  }
+
+  // -------------------------
+  // Testsuite Configs operations
+  // -------------------------
+
+  async addTestsuiteConfig(
+    testsuiteConfig: Partial<TestsuiteConfig>
+  ): Promise<TestsuiteConfig> {
+    const { data, error } = await this.client
+      .from(this.TABLENAME_TESTSUITE_CONFIGS)
+      .insert(testsuiteConfig)
+      .select()
+      .single();
+    if (error) {
+      console.error("Error adding testsuite config:", error);
+      throw error;
+    }
+    return data;
+  }
+
+  async deleteTestsuiteConfig(testsuite_id: string, key: string) {
+    const { data, error } = await this.client
+      .from(this.TABLENAME_TESTSUITE_CONFIGS)
+      .delete()
+      .eq("testsuite_id", testsuite_id)
+      .eq("key", key);
+    if (error) {
+      console.error("Error deleting testsuite config:", error);
+      throw error;
+    }
+  }
+
+  async getTestsuiteConfigs(testsuite_id: string): Promise<TestsuiteConfig[]> {
+    const { data, error } = await this.client
+      .from(this.TABLENAME_TESTSUITE_CONFIGS)
+      .select("*")
+      .eq("testsuite_id", testsuite_id);
+    if (error) {
+      console.error("Error fetching testsuite configs:", error);
+      throw error;
+    }
+    return data || [];
   }
 }

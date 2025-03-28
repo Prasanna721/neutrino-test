@@ -1,7 +1,9 @@
+import { ConfigItem } from "@/app/neutrino-test/[testSuiteId]/views/ConfigsTab";
 import {
   PodStatus,
   PodDeploymentEnv,
   TaskStatus,
+  Json,
 } from "@neutrino-package/supabase/types";
 
 export interface TestContainer {
@@ -11,6 +13,7 @@ export interface TestContainer {
   taskStatus: TaskStatus;
   dockerImage: string | undefined;
   dockerContainerId: string | undefined;
+  testsuiteConfigs: string[] | undefined;
   errorMessage: string | undefined;
   createdTime: Date | null;
   startTime: Date | null;
@@ -25,4 +28,5 @@ export interface TestSuite {
   created_at: Date;
   updated_at: Date;
   testRuns: TestContainer[];
+  testSuiteConfigs: ConfigItem[];
 }

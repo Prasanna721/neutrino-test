@@ -6,22 +6,27 @@ import { BaseButton, buttonDefault, buttonDisabled, IconButton } from "@/compone
 import { TestSuiteListItem } from "./TestSuiteListComponent";
 import { addTestSuiteTask } from "@/lib/dbhelper";
 import LoadingSVG from "@/components/LoadingSvg";
+import SlashCommandInput from "./SlashComandInput";
+import { TestSuite } from "@/types/testSuiteTypes";
 
-function ListAddComponent({ testSuiteId, testSteps, setTestSteps }: ListAddComponentProps) {
+function ListAddComponent({ testSuite, testSteps, setTestSteps }: ListAddComponentProps) {
     const [testStep, setTestStep] = useState("");
     const [addingTestStep, setAddingTestStep] = useState(false);
+    const [clearTrigger, setClearTrigger] = useState(0);
 
     const handleAdd = async () => {
         if (!testStep.trim()) return;
         setAddingTestStep(true);
-        const newTestStep = await addTestSuiteTask(testSuiteId, testStep);
+        const newTestStep = await addTestSuiteTask(testSuite.testSuiteId, testStep);
         setAddingTestStep(false);
         setTestSteps([...testSteps, newTestStep]);
         setTestStep("");
+        setClearTrigger(Date.now());
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && !addingTestStep) {
+            e.preventDefault();
             handleAdd();
         }
     };
@@ -32,14 +37,23 @@ function ListAddComponent({ testSuiteId, testSteps, setTestSteps }: ListAddCompo
                 <div className="p-1.5 bg-gray-200 rounded-full">
                     <PlusIcon className="w-5 h-5 text-gray-600" />
                 </div>
-                <input
+                {/* <input
                     type="text"
                     placeholder="Add Test Step"
                     value={testStep}
                     onChange={(e) => setTestStep(e.target.value)}
                     onKeyDown={handleKeyDown}
                     className="block w-full rounded-md px-3 py-1 
-                            text-sm focus:outline-none"/>
+                            text-sm focus:outline-none"/> */}
+                <SlashCommandInput
+                    useCustomNode={false}
+                    initialValue=""
+                    placeholder="Add test step"
+                    onKeyDown={handleKeyDown}
+                    onChange={(text) => setTestStep(text)}
+                    slashCommands={testSuite.testSuiteConfigs}
+                    clearTrigger={clearTrigger}
+                />
             </div>
 
             <div>
@@ -62,7 +76,7 @@ function ListAddComponent({ testSuiteId, testSteps, setTestSteps }: ListAddCompo
 }
 
 interface ListAddComponentProps {
-    testSuiteId: string;
+    testSuite: TestSuite;
     testSteps: TestSuiteListItem[];
     setTestSteps: React.Dispatch<React.SetStateAction<TestSuiteListItem[]>>;
 }
