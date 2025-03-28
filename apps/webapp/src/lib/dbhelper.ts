@@ -11,7 +11,9 @@ import {
   PodStatus,
   BrowserAction,
   TaskStatus,
+  TestsuiteConfig,
 } from "@neutrino-package/supabase/types";
+import { ConfigItem } from "@/app/neutrino-test/[testSuiteId]/views/ConfigsTab";
 
 export const createTestSuite = async (
   name: string,
@@ -29,6 +31,7 @@ export const createTestSuite = async (
     name: ts.name,
     description: ts.description || "",
     testRuns: [],
+    testSuiteConfigs: [],
     created_at: new Date(ts.created_at),
     updated_at: new Date(ts.updated_at),
   };
@@ -51,6 +54,7 @@ export const getTestSuite = async (
         environment: pod.environment,
         dockerContainerId: pod.docker_container_id,
         dockerImage: pod.docker_image,
+        testsuiteConfigs: pod.testsuite_configs,
         jobName: pod.jobname,
         errorMessage: pod.error_message,
         createdTime: new Date(pod.created_at),
@@ -59,11 +63,22 @@ export const getTestSuite = async (
       };
       return testRun;
     });
+    const testsuiteConfigs: TestsuiteConfig[] = await fetchTestsuiteConfig(
+      testSuiteId
+    );
+    const testSuiteConfigTransformed: ConfigItem[] = testsuiteConfigs.map(
+      (config) => ({
+        key: config.key,
+        value: config.value,
+        created_at: new Date(config.created_on),
+      })
+    );
     const testSuite: TestSuite = {
       testSuiteId: ts.id,
       name: ts.name,
       description: ts.description || "",
       testRuns: testRunTransformed,
+      testSuiteConfigs: testSuiteConfigTransformed,
       created_at: new Date(ts.created_at),
       updated_at: new Date(ts.updated_at),
     };
@@ -81,32 +96,10 @@ export const getAllTestSuites = async (): Promise<TestSuite[]> => {
   const testSuites = await db.getAllTestsuite();
   let testSuitesTransformed: TestSuite[] = [];
   for (let i = 0; i < testSuites.length; i++) {
-    const testRuns: Pod[] = await db.getPodsByTestsuite(testSuites[i].id);
-    const testRunTransformed: TestContainer[] = testRuns.map((pod: Pod) => {
-      const testRun: TestContainer = {
-        podId: pod.id,
-        podStatus: pod.status,
-        taskStatus: pod.task_status,
-        environment: pod.environment,
-        dockerContainerId: pod.docker_container_id,
-        dockerImage: pod.docker_image,
-        jobName: pod.jobname,
-        errorMessage: pod.error_message,
-        createdTime: new Date(pod.created_at),
-        startTime: new Date(pod.started_at),
-        endTime: pod.finished_at ? new Date(pod.finished_at) : null,
-      };
-      return testRun;
-    });
-    const testSuite: TestSuite = {
-      testSuiteId: testSuites[i].id,
-      name: testSuites[i].name,
-      description: testSuites[i].description || "",
-      testRuns: testRunTransformed,
-      created_at: new Date(testSuites[i].created_at),
-      updated_at: new Date(testSuites[i].updated_at),
-    };
-    testSuitesTransformed.push(testSuite);
+    const testSuite = await getTestSuite(testSuites[i].id);
+    if (testSuite) {
+      testSuitesTransformed.push(testSuite);
+    }
   }
   return testSuitesTransformed;
 };
@@ -231,4 +224,38 @@ export const getBrowserActionUrl = async (
   const db = new SupabaseDB(supabaseClient);
   const signedUrl = await db.getBrowserActionFromBucket(filePath);
   return signedUrl;
+};
+
+export const addTestsuiteConfig = async (
+  testSuiteId: string,
+  configKey: string,
+  configValue: string
+): Promise<Partial<TestsuiteConfig>> => {
+  const supabaseClient = createSupabaseClient();
+  const db = new SupabaseDB(supabaseClient);
+  const config: Partial<TestsuiteConfig> = {
+    testsuite_id: testSuiteId,
+    key: configKey,
+    value: configValue,
+  };
+  const configDetails = await db.addTestsuiteConfig(config);
+  return configDetails;
+};
+
+export const fetchTestsuiteConfig = async (
+  testSuiteId: string
+): Promise<TestsuiteConfig[]> => {
+  const supabaseClient = createSupabaseClient();
+  const db = new SupabaseDB(supabaseClient);
+  const configDetails = await db.getTestsuiteConfigs(testSuiteId);
+  return configDetails;
+};
+
+export const deleteTestsuiteConfig = async (
+  testSuiteId: string,
+  configKey: string
+): Promise<void> => {
+  const supabaseClient = createSupabaseClient();
+  const db = new SupabaseDB(supabaseClient);
+  await db.deleteTestsuiteConfig(testSuiteId, configKey);
 };

@@ -25,7 +25,8 @@ export async function executeAction(page: Page, action: Action): Promise<void> {
         await page.mouse.click(action.screen_coord.x, action.screen_coord.y);
       }
       break;
-    case BROWSER_ACTIONS.type || BROWSER_ACTIONS.click_and_type:
+    case BROWSER_ACTIONS.type:
+    case BROWSER_ACTIONS.click_and_type:
       if (action.screen_coord && action.message) {
         await page.mouse.click(action.screen_coord.x, action.screen_coord.y);
         await page.keyboard.type(action.message);

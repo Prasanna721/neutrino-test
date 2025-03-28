@@ -1,4 +1,8 @@
-import { getPodDetails, getTestSuite } from "@/lib/dbhelper";
+import {
+  fetchTestsuiteConfig,
+  getPodDetails,
+  getTestSuite,
+} from "@/lib/dbhelper";
 import { TestContainer, TestSuite } from "@/types/testSuiteTypes";
 import {
   PodStatus,
@@ -6,7 +10,6 @@ import {
   TaskStatus,
   Pod,
 } from "@neutrino-package/supabase/types";
-import test from "node:test";
 import { create } from "zustand";
 
 const initialTestRun: TestContainer = {
@@ -16,6 +19,7 @@ const initialTestRun: TestContainer = {
   taskStatus: TaskStatus.PROGESS,
   dockerContainerId: "",
   dockerImage: "",
+  testsuiteConfigs: [],
   errorMessage: "",
   createdTime: new Date(),
   startTime: new Date(),
@@ -30,6 +34,7 @@ const initialTestSuite: TestSuite = {
   created_at: new Date(),
   updated_at: new Date(),
   testRuns: [],
+  testSuiteConfigs: [],
 };
 
 interface TestsuiteStoreState {
@@ -89,6 +94,7 @@ export const updateCurrentTestRun = async (jobName: string) => {
     taskStatus: podDetails.task_status,
     dockerContainerId: podDetails.docker_container_id,
     dockerImage: podDetails.docker_image,
+    testsuiteConfigs: podDetails.testsuite_configs,
     errorMessage: "",
     createdTime: new Date(podDetails.created_at),
     startTime: new Date(podDetails.started_at),
@@ -123,4 +129,16 @@ export const updateTestSuiteById = async (testSuiteId: string) => {
   if (ts != null) {
     useTestsuiteStore.getState().setTestSuite(ts);
   }
+};
+
+export const updateTestsuiteConfig = async (testSuiteId: string) => {
+  const testSuiteConfigs = await fetchTestsuiteConfig(testSuiteId);
+  const transformedConfigs = testSuiteConfigs.map((config) => ({
+    key: config.key,
+    value: config.value,
+    created_at: new Date(config.created_on),
+  }));
+  const ts = structuredClone(useTestsuiteStore.getState().testSuite);
+  ts.testSuiteConfigs = transformedConfigs;
+  useTestsuiteStore.getState().setTestSuite(ts);
 };

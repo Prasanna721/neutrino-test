@@ -42,6 +42,13 @@
     formdata-node "^4.3.2"
     node-fetch "^2.6.7"
 
+"@babel/runtime@^7.12.5":
+  version "7.27.0"
+  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.27.0.tgz"
+  integrity sha512-VtPOkrdPHZsKc/clNqyi9WUA8TINkZ4cGk63UUE3u4pmB2k+ZMQRDuIOagv8UVd6j7k0T3+RRIb7beKTebNbcw==
+  dependencies:
+    regenerator-runtime "^0.14.0"
+
 "@cfworker/json-schema@^4.0.2":
   version "4.1.1"
   resolved "https://registry.npmjs.org/@cfworker/json-schema/-/json-schema-4.1.1.tgz"
@@ -380,6 +387,207 @@
   integrity sha512-djI4uw9rlkAb5iMhtLED+xJebDdAG935AdP4eRTB02R7OB/act55Bj9wsskhZsvuyQRpO4O1wQOp85s6T6GWmw==
   dependencies:
     js-tiktoken "^1.0.12"
+
+"@lexical/clipboard@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/clipboard/-/clipboard-0.29.0.tgz"
+  integrity sha512-llxZosYCwH13p2GfPfhAinukdvAZYxWuwf5md107X80hsE8TQJj25unjqTwRKQ+w/wD+hpmBMziU8+K/WTitWQ==
+  dependencies:
+    "@lexical/html" "0.29.0"
+    "@lexical/list" "0.29.0"
+    "@lexical/selection" "0.29.0"
+    "@lexical/utils" "0.29.0"
+    lexical "0.29.0"
+
+"@lexical/code@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/code/-/code-0.29.0.tgz"
+  integrity sha512-yKGzoKpyIO39Xf7OKLPpoCE5V8mTDCM3l3CDHZR3X1gM/VZQzf4jAiO3b06y9YkQ2fM8kqwchYu87wGvs8/iIQ==
+  dependencies:
+    "@lexical/utils" "0.29.0"
+    lexical "0.29.0"
+    prismjs "^1.30.0"
+
+"@lexical/devtools-core@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/devtools-core/-/devtools-core-0.29.0.tgz"
+  integrity sha512-uUq0m9ql/7mthp7Ho1vnG7Id6imQ5kD5mxUhX2lmgHretS+yAHGsGsGiPIVHdPWeVmUb2n4IVDJ+cJbUsUjQJw==
+  dependencies:
+    "@lexical/html" "0.29.0"
+    "@lexical/link" "0.29.0"
+    "@lexical/mark" "0.29.0"
+    "@lexical/table" "0.29.0"
+    "@lexical/utils" "0.29.0"
+    lexical "0.29.0"
+
+"@lexical/dragon@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/dragon/-/dragon-0.29.0.tgz"
+  integrity sha512-Zaky2jd/Pp1blAZqPeGNdyhxnVL4lwVjbWPxhfS1gbW4Q5CBQ3aD3B0T4ljiKfmRNJm004LJ9q7KjhlRbREvZA==
+  dependencies:
+    lexical "0.29.0"
+
+"@lexical/hashtag@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/hashtag/-/hashtag-0.29.0.tgz"
+  integrity sha512-fa7s0Yi2RKz/GvgT5XU9fborx6VPU3VtvvEPaIXgyd6zXZRiOhD9rGypwB3oj4fMK1ndx2dX0m7SwhMJo48D8w==
+  dependencies:
+    "@lexical/utils" "0.29.0"
+    lexical "0.29.0"
+
+"@lexical/history@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/history/-/history-0.29.0.tgz"
+  integrity sha512-OrCwZycp/yaq63mw511NutkwAB+W6WSchG1xTxlLh6nbc8jnbvKhCf4CGbnrvlhD7hTuzxJ8FI9/2M/2zv/mNQ==
+  dependencies:
+    "@lexical/utils" "0.29.0"
+    lexical "0.29.0"
+
+"@lexical/html@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/html/-/html-0.29.0.tgz"
+  integrity sha512-+jV6ijppOpxpUGeXkGssXJbsAmFALfeLrgbM0xuZbxZ7RgYZ+5Atn00WjSno7+JV5EOuRkYmCNtS1tiHtXMY1g==
+  dependencies:
+    "@lexical/selection" "0.29.0"
+    "@lexical/utils" "0.29.0"
+    lexical "0.29.0"
+
+"@lexical/link@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/link/-/link-0.29.0.tgz"
+  integrity sha512-wGbKRF0x/6ZQHuCfr8m8qD1J0R1kFmWINBG2A1hUXPDf7UY5qm/nS2oKNDGpjiDMGwkVZ7n7WfzeBGO+KRe/Lg==
+  dependencies:
+    "@lexical/utils" "0.29.0"
+    lexical "0.29.0"
+
+"@lexical/list@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/list/-/list-0.29.0.tgz"
+  integrity sha512-sWiof+i2ff8rL7KxJ3dxHLwyJfX423e1EVLmAdQEOPhyZJiNbeLTSNhNGsZ8FjFoBwvTTEDwuQZm3iT3hliKOg==
+  dependencies:
+    "@lexical/selection" "0.29.0"
+    "@lexical/utils" "0.29.0"
+    lexical "0.29.0"
+
+"@lexical/mark@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/mark/-/mark-0.29.0.tgz"
+  integrity sha512-UB3x6pyUdpZHRqF4tiajLnC1+Umvt7x8Rkkdi29aNNvzIWniVwGkBOlmvFus7x+4dOV1D1fydwiP4m38nGgLDw==
+  dependencies:
+    "@lexical/utils" "0.29.0"
+    lexical "0.29.0"
+
+"@lexical/markdown@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/markdown/-/markdown-0.29.0.tgz"
+  integrity sha512-4Od8WoDoviv9DxJZVgrIORTIAzyoGOpztbGbIBXguGmwvy7NnHQDh9fZYIYRrdI1Awp1VVGdJ3ku/7KTgSOoRw==
+  dependencies:
+    "@lexical/code" "0.29.0"
+    "@lexical/link" "0.29.0"
+    "@lexical/list" "0.29.0"
+    "@lexical/rich-text" "0.29.0"
+    "@lexical/text" "0.29.0"
+    "@lexical/utils" "0.29.0"
+    lexical "0.29.0"
+
+"@lexical/offset@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/offset/-/offset-0.29.0.tgz"
+  integrity sha512-VyD2Ff3rBJpo++Fxvi3MNYmDELa+9nA0EgXqGRNb3MvRehRjHbaDbymtLMMHIwvbkF5lnra+ubStcTRQmoQxXw==
+  dependencies:
+    lexical "0.29.0"
+
+"@lexical/overflow@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/overflow/-/overflow-0.29.0.tgz"
+  integrity sha512-IzH3M652Ej2gB2sK65N3yTgyiQAa3I3tqKbSnBRiXu/+isxHoCy/qRr9/kL63uy7zhGvgV+EYsoffQCawIFt8Q==
+  dependencies:
+    lexical "0.29.0"
+
+"@lexical/plain-text@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/plain-text/-/plain-text-0.29.0.tgz"
+  integrity sha512-F5C3meDb2HmO0NmKJBVRkjmX9PNln6O1jXU/APJuSFBdvfcIWSY58ncHR4zy2M5LF1Q5PQMWyIay9p+SqOtY5A==
+  dependencies:
+    "@lexical/clipboard" "0.29.0"
+    "@lexical/selection" "0.29.0"
+    "@lexical/utils" "0.29.0"
+    lexical "0.29.0"
+
+"@lexical/react@^0.29.0", "@lexical/react@>=0.11.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/react/-/react-0.29.0.tgz"
+  integrity sha512-YMlnljW/jxmwSzsRv5UPatfOoMZXqxFmRIEltTUIQfrOFdqn+ssUtCpjE6xRD1oxD6KpSIekakzLs+y/8+7CuQ==
+  dependencies:
+    "@lexical/devtools-core" "0.29.0"
+    "@lexical/dragon" "0.29.0"
+    "@lexical/hashtag" "0.29.0"
+    "@lexical/history" "0.29.0"
+    "@lexical/link" "0.29.0"
+    "@lexical/list" "0.29.0"
+    "@lexical/mark" "0.29.0"
+    "@lexical/markdown" "0.29.0"
+    "@lexical/overflow" "0.29.0"
+    "@lexical/plain-text" "0.29.0"
+    "@lexical/rich-text" "0.29.0"
+    "@lexical/table" "0.29.0"
+    "@lexical/text" "0.29.0"
+    "@lexical/utils" "0.29.0"
+    "@lexical/yjs" "0.29.0"
+    lexical "0.29.0"
+    react-error-boundary "^3.1.4"
+
+"@lexical/rich-text@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/rich-text/-/rich-text-0.29.0.tgz"
+  integrity sha512-fSKgXGxJUOWo7dwSTUYFVBNNk4pPN8norsZfdmKM1kGDS1/GKuVzlzHLKZ7rQb8RLD5a43p4ifEL+28P+q0Qqg==
+  dependencies:
+    "@lexical/clipboard" "0.29.0"
+    "@lexical/selection" "0.29.0"
+    "@lexical/utils" "0.29.0"
+    lexical "0.29.0"
+
+"@lexical/selection@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/selection/-/selection-0.29.0.tgz"
+  integrity sha512-lX9CRrXgKte65cozTHFXwUJ2fvZD92OEtos+YU+U40GJjf3NdheGeKDxDfOpF4AXrYRSszY7E0CzmIvuEs0p4A==
+  dependencies:
+    lexical "0.29.0"
+
+"@lexical/table@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/table/-/table-0.29.0.tgz"
+  integrity sha512-Jdj32kBDeJh/0dGaZB14JggnEIS956/cN7grnLr7cmhhVzDicvLMBENSXQVEJAQVcSIU4G9EvxC7GJZ9VgqDnA==
+  dependencies:
+    "@lexical/clipboard" "0.29.0"
+    "@lexical/utils" "0.29.0"
+    lexical "0.29.0"
+
+"@lexical/text@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/text/-/text-0.29.0.tgz"
+  integrity sha512-QnNGr6ickTLk76o3PdxJjPwt//dpuh8idVfR73WdCIoAwkhiEPUxxTZERoMsudXj6O/lJ+/HhI61wVjLckYr3A==
+  dependencies:
+    lexical "0.29.0"
+
+"@lexical/utils@>=0.11.0", "@lexical/utils@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/utils/-/utils-0.29.0.tgz"
+  integrity sha512-y2hhWQDjcXdplsAaQMuZx6ht9u1I4BV5NynA+WKoQ3h8vKxzeDnpCxVOK/zxU1R5dhM/nilnFu7uhvrSeEn+TQ==
+  dependencies:
+    "@lexical/list" "0.29.0"
+    "@lexical/selection" "0.29.0"
+    "@lexical/table" "0.29.0"
+    lexical "0.29.0"
+
+"@lexical/yjs@0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@lexical/yjs/-/yjs-0.29.0.tgz"
+  integrity sha512-6IXWWlGkVJEzWP/+LcuKYJ9jmcFp8k7TT/jmz4V5gBD9Ut3swOGsIA/sQCtB9y7jad10csaDVmFdFzGNWKVH9A==
+  dependencies:
+    "@lexical/offset" "0.29.0"
+    "@lexical/selection" "0.29.0"
+    lexical "0.29.0"
 
 "@lukeed/ms@^2.0.2":
   version "2.0.2"
@@ -2422,6 +2630,11 @@ isomorphic-ws@^5.0.0:
   resolved "https://registry.npmjs.org/isomorphic-ws/-/isomorphic-ws-5.0.0.tgz"
   integrity sha512-muId7Zzn9ywDsyXgTIafTry2sV3nySZeUDe6YedVd1Hvuuep5AsIlqK+XefWpYTyJG5e503F2xIuT2lcU6rCSw==
 
+isomorphic.js@^0.2.4:
+  version "0.2.5"
+  resolved "https://registry.npmjs.org/isomorphic.js/-/isomorphic.js-0.2.5.tgz"
+  integrity sha512-PIeMbHqMt4DnUP3MA/Flc0HElYjMXArsw1qwJZcm9sqR8mq3l8NYizFMty0pWwE/tzIGH3EKK5+jes5mAr85yw==
+
 iterator.prototype@^1.1.4:
   version "1.1.5"
   resolved "https://registry.npmjs.org/iterator.prototype/-/iterator.prototype-1.1.5.tgz"
@@ -2592,6 +2805,23 @@ levn@^0.4.1:
   dependencies:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
+
+lexical-beautiful-mentions@^0.1.47:
+  version "0.1.47"
+  resolved "https://registry.npmjs.org/lexical-beautiful-mentions/-/lexical-beautiful-mentions-0.1.47.tgz"
+  integrity sha512-egaA9mlmUCZ9sEdTj/GUga0CFlwbc1Rky8WEcZpyJqhvqGWOb4eIDgC82/8nCq+y+P0xq69BYF24yFEiocTn0g==
+
+lexical@^0.29.0, lexical@>=0.11.0, lexical@0.29.0:
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/lexical/-/lexical-0.29.0.tgz"
+  integrity sha512-eoBHUEn0LmExKeK6x2cFKU0FPaMk2Bc5HgiCzTiv5ymKtwWw7LeKcxaNPmLxRRdQpcWV1IMKjayAbw7Lt/Gu7w==
+
+lib0@^0.2.99:
+  version "0.2.101"
+  resolved "https://registry.npmjs.org/lib0/-/lib0-0.2.101.tgz"
+  integrity sha512-LljA6+Ehf0Z7YnxhgSAvspzWALjW4wlWdN/W4iGiqYc1KvXQgOVXWI0xwlwqozIL5WRdKeUW2gq0DLhFsY+Xlw==
+  dependencies:
+    isomorphic.js "^0.2.4"
 
 light-my-request@^6.0.0:
   version "6.6.0"
@@ -2767,6 +2997,8 @@ net@^1.0.2:
     "@fastify/cors" "^10.0.2"
     "@fastify/sensible" "^6.0.3"
     "@fastify/websocket" "^11.0.2"
+    "@langchain/anthropic" "^0.3.15"
+    "@langchain/core" "^0.3.42"
     "@neutrino-package/rabbitmq" "^1.0.0"
     "@neutrino-package/supabase" "^1.0.0"
     "@supabase/supabase-js" "^2.48.1"
@@ -3173,6 +3405,11 @@ prelude-ls@^1.2.1:
   resolved "https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.2.1.tgz"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
 
+prismjs@^1.30.0:
+  version "1.30.0"
+  resolved "https://registry.npmjs.org/prismjs/-/prismjs-1.30.0.tgz"
+  integrity sha512-DEvV2ZF2r2/63V+tK8hQvrR2ZGn10srHbXviTlcv7Kpzw8jWiNTqbVgjO3IY8RxrrOUF8VPMQQFysYYYv0YZxw==
+
 process-warning@^4.0.0:
   version "4.0.1"
   resolved "https://registry.npmjs.org/process-warning/-/process-warning-4.0.1.tgz"
@@ -3207,12 +3444,19 @@ quick-format-unescaped@^4.0.3:
   resolved "https://registry.npmjs.org/quick-format-unescaped/-/quick-format-unescaped-4.0.4.tgz"
   integrity sha512-tYC1Q1hgyRuHgloV/YXs2w15unPVh8qfu/qCTfhTYamaw7fyhumKa2yGpdSo87vY32rIclj+4fWYQXUMs9EHvg==
 
-"react-dom@^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0", react-dom@^19.0.0, react-dom@>=16:
+"react-dom@^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0", react-dom@^19.0.0, react-dom@>=16, react-dom@>=17.x:
   version "19.0.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-19.0.0.tgz"
   integrity sha512-4GV5sHFG0e/0AD4X+ySy6UJd3jVl1iNsNHdpad0qhABJ11twS3TTBnseqsKurKcsNqCEFeGL3uLpVChpIO3QfQ==
   dependencies:
     scheduler "^0.25.0"
+
+react-error-boundary@^3.1.4:
+  version "3.1.4"
+  resolved "https://registry.npmjs.org/react-error-boundary/-/react-error-boundary-3.1.4.tgz"
+  integrity sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
 
 react-hot-toast@^2.5.2:
   version "2.5.2"
@@ -3227,7 +3471,7 @@ react-is@^16.13.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-"react@^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0", react@^19.0.0, "react@>= 16 || ^19.0.0-rc", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0 || ^19.0.0-0", react@>=16, react@>=18.0.0:
+"react@^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0", react@^19.0.0, "react@>= 16 || ^19.0.0-rc", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0 || ^19.0.0-0", react@>=16, react@>=16.13.1, react@>=17.x, react@>=18.0.0:
   version "19.0.0"
   resolved "https://registry.npmjs.org/react/-/react-19.0.0.tgz"
   integrity sha512-V8AVnmPIICiWpGfm6GLzCR/W5FXLchHop40W4nXBmdlEceh16rCN8O8LNWm5bh5XUX91fh7KpA+W0TgMKmgTpQ==
@@ -3273,6 +3517,11 @@ reflect.getprototypeof@^1.0.6, reflect.getprototypeof@^1.0.9:
     get-intrinsic "^1.2.7"
     get-proto "^1.0.1"
     which-builtin-type "^1.2.1"
+
+regenerator-runtime@^0.14.0:
+  version "0.14.1"
+  resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.14.1.tgz"
+  integrity sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==
 
 regexp.prototype.flags@^1.5.3:
   version "1.5.4"
@@ -4087,11 +4336,13 @@ web-streams-polyfill@4.0.0-beta.3:
   dependencies:
     "@heroicons/react" "^2.2.0"
     "@kubernetes/client-node" "^1.0.0"
+    "@lexical/react" "^0.29.0"
     "@neutrino-package/rabbitmq" "^1.0.0"
     "@neutrino-package/supabase" "^1.0.0"
     amqplib "^0.10.5"
     crypto "^1.0.1"
     crypto-js "^4.2.0"
+    lexical "^0.29.0"
     net "^1.0.2"
     next "15.1.6"
     react "^19.0.0"
@@ -4214,6 +4465,13 @@ yaml@^2.2.1, yaml@^2.3.4:
   version "2.7.0"
   resolved "https://registry.npmjs.org/yaml/-/yaml-2.7.0.tgz"
   integrity sha512-+hSoy/QHluxmC9kCIJyL/uyFmLmc+e5CFR5Wa+bpIhIj85LVb9ZH2nVnqrHoSvKogwODv0ClqZkmiSSaIH5LTA==
+
+yjs@>=13.5.22:
+  version "13.6.24"
+  resolved "https://registry.npmjs.org/yjs/-/yjs-13.6.24.tgz"
+  integrity sha512-xn/pYLTZa3uD1uDG8lpxfLRo5SR/rp0frdASOl2a71aYNvUXdWcLtVL91s2y7j+Q8ppmjZ9H3jsGVgoFMbT2VA==
+  dependencies:
+    lib0 "^0.2.99"
 
 yn@3.1.1:
   version "3.1.1"

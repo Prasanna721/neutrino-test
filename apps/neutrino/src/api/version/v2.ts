@@ -25,6 +25,7 @@ import { executeAction } from "../../actions.js";
 import { improveBrowserVisibility } from "../../browser/utils.js";
 import AnthropicAdapter, { ANTHROPIC_MODEL } from "../../drivers/anthropic.js";
 import { ChatAnthropic } from "@langchain/anthropic";
+import { SecretsManager } from "@/services/secretsManager.js";
 
 // Maximum number of allowed retries per task
 const MAX_RETRIES = 4;
@@ -41,6 +42,7 @@ export class API {
   private podLogHandler: PodLogHandler;
   private browserViewLogCount: number = 0;
   private stepFlowChat: ChatAnthropic | null = null;
+  private secretsManager: SecretsManager;
 
   constructor(
     dockerJobName: string,
@@ -53,6 +55,7 @@ export class API {
     this.dockerJobName = dockerJobName;
     this.isLogPublisherActive = isLogPublisherActive;
     this.podLogHandler = PodLogHandler.getInstance(this.db);
+    this.secretsManager = new SecretsManager();
     clearFolder(screenshotDIR);
   }
 
@@ -62,6 +65,14 @@ export class API {
   async initPodDetails(): Promise<void> {
     const podDetails = await this.db.getPodByJobName(this.dockerJobName);
     this.podId = podDetails.id;
+
+    await this.secretsManager.updateConfigs(
+      this.testSuiteId,
+      this.db,
+      this.podId,
+      this.testSuite,
+      this.podLogHandler
+    );
   }
 
   /**
@@ -86,7 +97,8 @@ export class API {
    */
   private async executeTask(
     page: Page,
-    task: string,
+    testStep: string,
+    processedStep: string,
     testStepFlow: { [tag: string]: string },
     dimensions: any
   ): Promise<{ [tag: string]: string }> {
@@ -124,8 +136,15 @@ export class API {
     if (testStepResponse.status != "complete" && testStepFlowEvals.action!) {
       const action = JSON.parse(testStepFlowEvals.action);
 
+      const { actionWithRealConfigs } = await this.secretsManager.processAction(
+        testStep,
+        action
+      );
+
+      console.log(actionWithRealConfigs);
+
       // Execute the determined action.
-      await executeAction(page, action);
+      await executeAction(page, actionWithRealConfigs);
       await page.waitForTimeout(5000);
 
       // Capture a screenshot after the action.
@@ -146,7 +165,7 @@ export class API {
         currentUrl,
         mime_type,
         BrowserActionType.TASK,
-        { task, action }
+        { testStep, action }
       );
     }
 
@@ -192,6 +211,7 @@ export class API {
     try {
       for (let i = 0; i < this.testSuite.length; i++) {
         const testStep = this.testSuite[i]!;
+        const { processedStep } = this.secretsManager.processTestStep(testStep);
         this.testStepsFlow[i] = 0;
 
         await improveBrowserVisibility(page);
@@ -203,7 +223,7 @@ export class API {
 
         const testStepFlow = await generateTestStepFlow(
           testStepChat,
-          testStep,
+          processedStep,
           path
         );
         if (i < this.testSuite.length - 1) {
@@ -226,13 +246,18 @@ export class API {
           const testStepFlowEvals = await this.executeTask(
             page,
             testStep,
+            processedStep,
             testStepFlow,
             dimensions
           );
           if (testStepFlowEvals.action) {
             const action = JSON.parse(testStepFlowEvals.action);
+            const { actionWithRealConfigs, actionWithPlaceholder } =
+              await this.secretsManager.processAction(testStep, action);
+            testStepFlowEvals.action = actionWithPlaceholder;
+
             if (action.task_type) {
-              testStepFlow.previous_action = testStepFlowEvals.action;
+              testStepFlow.previous_action = actionWithRealConfigs;
             }
           }
           //   console.log(testStepFlowEvals);
@@ -276,7 +301,7 @@ export class API {
           }
 
           this.testStepsFlow[i] = (this.testStepsFlow[i] ?? 0) + 1;
-          const retryWarn = `Retrying task ${this.testSuite[i]}, attempt ${this.testStepsFlow[i]}`;
+          const retryWarn = `Retrying task "${this.testSuite[i]}", attempt ${this.testStepsFlow[i]}`;
           console.warn(retryWarn);
           this.podLogHandler.warn(this.podId!, "retry_task", {
             message: retryWarn,

@@ -73,3 +73,9 @@ export const ToastView = ({ message, progress, type }: ToastViewProps) => {
         </div>
     );
 }
+
+export const ToastError = ({ message }: { message: string }) => {
+    return (<div className="bg-red-100 border border-red-300 p-2 rounded">
+        <p className="text-sm text-red-800">{message}</p>
+    </div>);
+}

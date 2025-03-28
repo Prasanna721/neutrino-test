@@ -53,7 +53,7 @@ export default function TestSuiteTab({ testSuite }: { testSuite: TestSuite }) {
             <div className={`flex flex-col space-y-4 ${CONTENT_PADDING} max-h-[calc(100vh-200px)] overflow-y-auto`}>
                 <TestSuiteListComponent testSteps={testSteps} setTestSteps={setTestSteps} />
 
-                <ListAddComponent testSuiteId={testSuite.testSuiteId} testSteps={testSteps} setTestSteps={setTestSteps} />
+                <ListAddComponent testSuite={testSuite} testSteps={testSteps} setTestSteps={setTestSteps} />
             </div>
         </div>
     );
