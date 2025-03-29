@@ -47,14 +47,17 @@ export class SecretsManager {
       );
     }
 
-    await podLogHandler.info(podId, "Fetched testsuite configs");
-    await db.updatePod(podId, {
-      testsuite_configs: Object.keys(this.secretMapping),
-    });
-
-    throw new Error("Missing testsuite configs");
-
-    console.log("Fetched testsuite configs");
+    if(missingConfigs.length > 0) {
+      await podLogHandler.info(podId, "Fetched testsuite configs");
+      await db.updatePod(podId, {
+        testsuite_configs: Object.keys(this.secretMapping),
+      });
+      
+      console.log("Fetched testsuite configs");
+    }
+    else{
+      console.log("Testsuite configs not required");
+    }
   }
 
   processTestStep(testStep: string): {

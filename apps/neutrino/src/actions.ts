@@ -5,6 +5,7 @@ export interface Action {
   task_type: BROWSER_ACTIONS;
   message?: string;
   screen_coord?: { x: number; y: number };
+  init_screen_coord?: { x: number; y: number };
   scroll?: { isVertical: boolean; px: number };
 }
 
@@ -38,7 +39,11 @@ export async function executeAction(page: Page, action: Action): Promise<void> {
       }
       break;
     case BROWSER_ACTIONS.drag:
-      if (action.screen_coord) {
+      if (action.screen_coord && action.init_screen_coord) {
+        await page.mouse.move(
+          action.init_screen_coord.x,
+          action.init_screen_coord.y
+        );
         await page.mouse.down();
         await page.mouse.move(action.screen_coord.x, action.screen_coord.y);
         await page.mouse.up();
