@@ -2,7 +2,8 @@
 
 Neutrino Test is an AI-powered QA testing platform that automates end-to-end testing using simple, natural language commands.
 
-[demo.webm](https://github.com/user-attachments/assets/c2319b4b-7ebb-48ae-b144-5d63934ac34c)
+[![Demo](https://github.com/user-attachments/assets/9ff9351a-e72b-4bd4-8e0e-7596d23becb5)
+](https://www.youtube.com/watch?v=zd-FDKeK3HY)
 
 
 ## Prerequisites
