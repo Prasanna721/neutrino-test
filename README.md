@@ -2,8 +2,20 @@
 
 Neutrino Test is an AI-powered QA testing platform that automates end-to-end testing using simple, natural language commands.
 
-[![Neutrino-test](https://github.com/user-attachments/assets/f1071c61-09e8-4e47-8e6e-5321727b9917)
-](https://www.youtube.com/watch?v=VL6-dZdQI_M)
+[//]: # "[![Neutrino-test](https://github.com/user-attachments/assets/f1071c61-09e8-4e47-8e6e-5321727b9917)
+](https://www.youtube.com/watch?v=VL6-dZdQI_M)"
+
+
+## Architecture
+
+<p align="center">
+  <img
+    src="https://github.com/user-attachments/assets/e7219565-663e-43e7-88a1-7be72878dc9f"
+    alt="Untitled-2025-03-27-2041"
+    width="600"
+  />
+</p>
+
 
 
 ## Prerequisites
@@ -24,13 +36,32 @@ Navigate to the `/apps/webapp` directory and create an environment file (e.g., `
 
 # Env variables for the webapp (webapp currently uses the Claude API driver)
 
-CLAUDE_API_KEY=your_claude_api_key_here
-SUPABASE_URL=your_supabase_url_here
-SUPABASE_KEY=your_supabase_key_here
+CLAUDE_API_KEY
+SUPABASE_URL
+SUPABASE_KEY
 
 ```
 
-### 2. Start Minikube
+
+
+### 2. Initialise Supabase DB
+
+Apply the database schema  
+   ```bash
+   supabase db push --file packages/supabase/schema.sql
+   ```
+Create the storage bucket
+   ```bash
+   supabase storage bucket create browser-actions-bucket
+   ```
+Apply the bucket policy
+   ```bash
+   supabase db query < packages/supabase/bucketPolicy.sql
+   ```
+
+
+
+### 3. Start Minikube
 
 Start your local Kubernetes cluster with Minikube:
 
@@ -56,7 +87,7 @@ docker info | grep minikube
 
 ```
 
-### 3. Build the Neutrino Service
+### 4. Build the Neutrino Service
 
 Navigate to the `/apps/neutrino` directory and build the Docker images using Docker Compose:
 
@@ -66,7 +97,7 @@ docker compose build
 
 ```
 
-### 4. Run the Webapp
+### 5. Run the Webapp
 
 From the root of the repository, run the following command to start the webapp:
 
