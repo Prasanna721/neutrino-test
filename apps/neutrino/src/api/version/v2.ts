@@ -25,7 +25,7 @@ import { executeAction } from "../../actions.js";
 import { improveBrowserVisibility } from "../../browser/utils.js";
 import AnthropicAdapter, { ANTHROPIC_MODEL } from "../../drivers/anthropic.js";
 import { ChatAnthropic } from "@langchain/anthropic";
-import { SecretsManager } from "@/services/secretsManager.js";
+import { SecretsManager } from "../../services/secretsManager.js";
 
 // Maximum number of allowed retries per task
 const MAX_RETRIES = 4;
@@ -65,14 +65,6 @@ export class API {
   async initPodDetails(): Promise<void> {
     const podDetails = await this.db.getPodByJobName(this.dockerJobName);
     this.podId = podDetails.id;
-
-    await this.secretsManager.updateConfigs(
-      this.testSuiteId,
-      this.db,
-      this.podId,
-      this.testSuite,
-      this.podLogHandler
-    );
   }
 
   /**
@@ -186,11 +178,21 @@ export class API {
 
     handleLogs(this.db, this.podLogHandler, this.podId);
 
+    if (this.podId && this.testSuite) {
+      await this.secretsManager.updateConfigs(
+        this.testSuiteId,
+        this.db,
+        this.podId,
+        this.testSuite,
+        this.podLogHandler
+      );
+    }
+
     if (!this.testSuite || !this.podId) {
       throw new Error("Error starting the test");
     }
 
-    this.browser = await chromium.launch({ headless: true });
+    this.browser = await chromium.launch({ headless: false });
     const context: BrowserContext = await this.browser.newContext({
       recordVideo: {
         dir: screenshotDIR,
@@ -277,7 +279,7 @@ export class API {
           if (testStepFlowEvals.error) {
             const testStepError = JSON.parse(testStepFlowEvals.error);
             if (testStepError.err_type) {
-              throw new Error(testStepError.toString());
+              throw new Error(JSON.stringify(testStepError));
             }
           }
 
@@ -318,6 +320,10 @@ export class API {
         finished_at: new Date().toISOString(),
       });
     } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? `${error.message}\n${error.stack}`
+          : JSON.stringify(error);
       if (this.isLogPublisherActive) {
         await LogPublisher.publish(
           this.dockerJobName,
@@ -327,13 +333,13 @@ export class API {
         );
       }
       await this.podLogHandler.error(this.podId!, "exec_error", {
-        error: String(error),
+        error: errorMessage,
       });
       await this.db.updatePod(this.podId, {
         status: PodStatus.STOPPED,
         task_status: TaskStatus.FAILED,
         finished_at: new Date().toISOString(),
-        error_message: String(error),
+        error_message: errorMessage,
       });
       console.error("Error during test execution:", error);
     } finally {

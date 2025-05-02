@@ -145,6 +145,7 @@ export const evaluateTestStepFlow = async (
     ACTION_STEPS: testStepFlows.action_steps,
     EXECUTION_NOTES: testStepFlows.execution_notes,
     PREVIOUS_ACTION: previousAction,
+    NEXT_TESTSTEP: nextStep,
   });
   const messages = await AnthropicAdapter.constructPayload(
     processTestStepPrompt.user_content,

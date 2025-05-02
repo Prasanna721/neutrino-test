@@ -257,7 +257,8 @@ export const getProcessTestStepPromptV2 = (
         "task_type": "goto_page|click|click_and_type|type|hover|drag|sleep|scroll",
         "message": "specific message or URL",
         "screen_coord": {"x": number, "y": number} or null,
-        "scroll": {"isVertical": boolean, "px": number} (optional)
+        "scroll": {"isVertical": boolean, "px": number} (optional),
+        "init_screen_coord": {"x": number, "y": number} only for drag action,
     }
     </action>
 
@@ -270,7 +271,7 @@ export const getProcessTestStepPromptV2 = (
 
     <error>
     {
-        "err_type": "short description of the bug",
+        "err_type": "short description of the bug prevent executing action_step",
         "description": "detailed description of the bug"
     }
     </error>
@@ -286,6 +287,7 @@ export const getProcessTestStepPromptV2 = (
 
     Additional Info:
       - For goto action might have an blank screenshot
+      - For drag action, there should be two screen coordinates init_screen_coord and screen_coord
 
     Important Notes:
       - Provide only one action step at a time.

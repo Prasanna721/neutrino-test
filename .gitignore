@@ -9,6 +9,7 @@ pnpm-debug.log*
 .env.test.local
 .env.production.local
 job-neutrino.yaml
+.auto-type
 
 .next/
 out/

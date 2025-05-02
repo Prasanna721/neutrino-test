@@ -1,7 +1,6 @@
 import buildFastifyServer from "./server/build.js";
 import { loggingConfig } from "./config.js";
 import { API } from "./api/version/v2.js";
-// import { API } from "./api/index.js";
 
 const app = async () => {
   const dockerJobName = process.env.JOB_NAME;

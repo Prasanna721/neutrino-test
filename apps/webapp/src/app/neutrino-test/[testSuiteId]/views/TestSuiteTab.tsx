@@ -28,7 +28,7 @@ export default function TestSuiteTab({ testSuite }: { testSuite: TestSuite }) {
         setStatus((prev) => (prev === "waiting" ? "running" : "waiting"));
     };
     const options: SelectOption[] = [
-        { label: "Auto-run", value: "auto_run", disabled: true },
+        { label: "Interactive-run", value: "interactive_run", disabled: true },
         { label: "Manual-run", value: "manual_run" },
     ];
     const [runMode, setRunMode] = useState<SelectOption>(options[1]);
