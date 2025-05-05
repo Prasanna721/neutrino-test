@@ -288,6 +288,7 @@ export const getProcessTestStepPromptV2 = (
     Additional Info:
       - For goto action might have an blank screenshot
       - For drag action, there should be two screen coordinates init_screen_coord and screen_coord
+      - For click_&_type, type action, if given with a placeholder, you can use the "<placeholder>" text as the message to type.
 
     Important Notes:
       - Provide only one action step at a time.
