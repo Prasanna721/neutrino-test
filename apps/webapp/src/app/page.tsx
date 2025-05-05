@@ -69,7 +69,7 @@ export default function Home() {
         </div>
 
         <nav className="hidden lg:flex space-x-10 text-base">
-          <a href="#" className="hover:underline">
+          <a href="https://github.com/Prasanna721/neutrino-test" className="hover:underline" target="_blank" rel="noopener noreferrer">
             Github
           </a>
           <a href="/neutrino-test" className="hover:underline">
